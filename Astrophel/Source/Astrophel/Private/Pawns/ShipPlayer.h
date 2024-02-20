@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "InputActionValue.h"
+
 #include "ShipPlayer.generated.h"
 
 class UCapsuleComponent;
@@ -12,6 +14,8 @@ class USpringArmComponent;
 class UCameraComponent;
 class USceneComponent;
 class UShipPlayerMovementComponent;
+class UInputMappingContext;
+class UInputAction;
 
 UCLASS()
 class AShipPlayer : public APawn {
@@ -46,5 +50,15 @@ private:
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Movement", meta=(AllowPrivateAccess="true"))
 	UShipPlayerMovementComponent* MovementComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Movement|Input", meta=(AllowPrivateAccess="true"))
+	UInputMappingContext* MappingContextPlayer;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Movement|Input", meta=(AllowPrivateAccess="true"))
+	UInputAction* ActionThrust;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Movement|Input", meta=(AllowPrivateAccess="true"))
+	UInputAction* ActionRotationalThrust;
+
+	void HandleInputThrust(const FInputActionValue& Value);
+	void HandleInputRotationalThrust(const FInputActionValue& Value);
 
 };
