@@ -7,7 +7,7 @@
 #include "ShipPlayer.generated.h"
 
 UCLASS()
-class ASTROPHEL_API AShipPlayer : public APawn {
+class AShipPlayer : public APawn {
 	GENERATED_BODY()
 
 public:
