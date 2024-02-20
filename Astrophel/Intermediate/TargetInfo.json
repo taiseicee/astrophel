@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "Astrophel",
+			"Path": "..\\Source\\Astrophel.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "AstrophelEditor",
+			"Path": "..\\Source\\AstrophelEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}

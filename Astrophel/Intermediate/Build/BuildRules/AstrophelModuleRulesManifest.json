@@ -1,0 +1,8 @@
+{
+	"SourceFiles": [
+		"C:\\Users\\sugiyat\\Documents\\GitHub\\Unreal\\astrophel\\Astrophel\\Source\\Astrophel\\Astrophel.Build.cs",
+		"C:\\Users\\sugiyat\\Documents\\GitHub\\Unreal\\astrophel\\Astrophel\\Source\\Astrophel.Target.cs",
+		"C:\\Users\\sugiyat\\Documents\\GitHub\\Unreal\\astrophel\\Astrophel\\Source\\AstrophelEditor.Target.cs"
+	],
+	"EngineVersion": "5.3.2"
+}
