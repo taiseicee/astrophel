@@ -46,9 +46,14 @@ void AShipPlayer::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
 	FVector Displacement = MovementComponent->GetDisplacementGlobal(DeltaTime, InputVelocity);
+	FRotator Rotation = MovementComponent->GetRotation(DeltaTime, InputRotationalVelocity);
 
-	FHitResult* OutSweepHitResult = new FHitResult();
-	AddActorWorldOffset(Displacement, true, OutSweepHitResult, ETeleportType::ResetPhysics);
+	FHitResult* OutTranslationalHitResult = new FHitResult();
+	AddActorWorldOffset(Displacement, true, OutTranslationalHitResult, ETeleportType::ResetPhysics);
+	
+	FHitResult* OutRotationalHitResult = new FHitResult();
+	AddActorLocalRotation(Rotation, true, OutRotationalHitResult, ETeleportType::ResetPhysics);
+
 	// if (OutSweepHitResult->bBlockingHit) Velocity = FVector::ZeroVector;
 }
 
@@ -69,6 +74,7 @@ void AShipPlayer::HandleInputThrust(const FInputActionValue& Value) {
 
 void AShipPlayer::HandleInputRotationalThrust(const FInputActionValue& Value) {
 	const float Input = Value.Get<float>();
+	InputRotationalVelocity.Pitch = Input; 
 
 	UE_LOG(LogTemp, Warning, TEXT("Rotational Thrust: %f"), Input);
 }

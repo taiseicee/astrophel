@@ -16,15 +16,21 @@ public:
 	UShipPlayerMovementComponent();
 	UPrimitiveComponent* UpdatedComponent;
 	FVector GetDisplacementGlobal(const float& DeltaTime, const FVector& InputVelocity);
+	FRotator GetRotation(const float& DeltaTime, const FRotator& InputRotationalVelocity);
 
 protected:
 	virtual void BeginPlay() override;
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess="true"))
-	float ThrustMaxSpeed = 100.f;
+	float ThrustMaxSpeed = 500.f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess="true"))
-	float ThrustAcceleration = 200.f;
+	float ThrustAcceleration = 50.f;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess="true"))
+	float RotationalMaxSpeed = 70.f;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess="true"))
+	float RotationalAcceleration = 15.f;
 
 	FVector ThustVelocity = FVector::ZeroVector;
+	FRotator RotationalVelocity = FRotator::ZeroRotator;
 };

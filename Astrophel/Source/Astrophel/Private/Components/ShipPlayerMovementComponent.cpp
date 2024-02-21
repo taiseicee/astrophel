@@ -25,3 +25,15 @@ FVector UShipPlayerMovementComponent::GetDisplacementGlobal(const float& DeltaTi
 
 	return Displacement;
 }
+
+FRotator UShipPlayerMovementComponent::GetRotation(const float& DeltaTime, const FRotator& InputRotationalVelocity) {
+	FRotator DesiredRotationalVelocity = InputRotationalVelocity * RotationalMaxSpeed + RotationalVelocity;
+	DesiredRotationalVelocity.Pitch = FMath::Clamp(DesiredRotationalVelocity.Pitch, -RotationalMaxSpeed, RotationalMaxSpeed);
+	float SpeedChange = DeltaTime * RotationalAcceleration;
+
+	RotationalVelocity.Pitch = FMath::FInterpTo(RotationalVelocity.Pitch, DesiredRotationalVelocity.Pitch, DeltaTime, SpeedChange);
+
+	FRotator Rotation = DeltaTime * RotationalVelocity;
+
+	return Rotation;
+}

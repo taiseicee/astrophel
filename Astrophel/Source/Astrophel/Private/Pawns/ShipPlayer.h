@@ -62,5 +62,6 @@ private:
 	void HandleInputRotationalThrust(const FInputActionValue& Value);
 
 	FVector InputVelocity = FVector::ZeroVector;
+	FRotator InputRotationalVelocity = FRotator::ZeroRotator;
 
 };
