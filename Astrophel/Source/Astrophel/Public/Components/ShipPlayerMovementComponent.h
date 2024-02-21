@@ -15,12 +15,16 @@ class ASTROPHEL_API UShipPlayerMovementComponent : public UActorComponent {
 public:
 	UShipPlayerMovementComponent();
 	UPrimitiveComponent* UpdatedComponent;
-	FVector GetVelocityGlobal(const float& DeltaTime, const FVector& InputVelocityGlobal);
+	FVector GetDisplacementGlobal(const float& DeltaTime, const FVector& InputVelocity);
 
 protected:
 	virtual void BeginPlay() override;
 
 private:
-	FVector VelocityGlobal = FVector::ZeroVector;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess="true"))
+	float ThrustMaxSpeed = 100.f;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess="true"))
+	float ThrustAcceleration = 200.f;
 
+	FVector ThustVelocity = FVector::ZeroVector;
 };

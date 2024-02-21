@@ -13,7 +13,15 @@ void UShipPlayerMovementComponent::BeginPlay() {
 	
 }
 
-FVector UShipPlayerMovementComponent::GetVelocityGlobal(const float& DeltaTime, const FVector& InputVelocityGlobal) {
-	UE_LOG(LogTemp, Warning, TEXT("Translational Velocity: %s"), *InputVelocityGlobal.ToString());
-	return InputVelocityGlobal;
+FVector UShipPlayerMovementComponent::GetDisplacementGlobal(const float& DeltaTime, const FVector& InputVelocity) {
+	FVector DesiredVelocity = InputVelocity * ThrustMaxSpeed + ThustVelocity;
+	DesiredVelocity = DesiredVelocity.GetClampedToMaxSize(ThrustMaxSpeed);
+	float SpeedChange = DeltaTime * ThrustAcceleration;
+
+	ThustVelocity.X = FMath::FInterpTo(ThustVelocity.X, DesiredVelocity.X, DeltaTime, SpeedChange);
+	ThustVelocity.Z = FMath::FInterpTo(ThustVelocity.Z, DesiredVelocity.Z, DeltaTime, SpeedChange);
+
+	FVector Displacement = DeltaTime * ThustVelocity;
+
+	return Displacement;
 }

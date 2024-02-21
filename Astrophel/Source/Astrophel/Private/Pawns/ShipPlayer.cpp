@@ -44,7 +44,12 @@ void AShipPlayer::BeginPlay() {
 
 void AShipPlayer::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
-	MovementComponent->GetVelocityGlobal(DeltaTime, InputVelocity);
+
+	FVector Displacement = MovementComponent->GetDisplacementGlobal(DeltaTime, InputVelocity);
+
+	FHitResult* OutSweepHitResult = new FHitResult();
+	AddActorWorldOffset(Displacement, true, OutSweepHitResult, ETeleportType::ResetPhysics);
+	// if (OutSweepHitResult->bBlockingHit) Velocity = FVector::ZeroVector;
 }
 
 void AShipPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) {
@@ -58,7 +63,8 @@ void AShipPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 void AShipPlayer::HandleInputThrust(const FInputActionValue& Value) {
 	const FVector2D Input = Value.Get<FVector2D>();
-	InputVelocity = FVector(Input.X, 0.f, Input.Y);
+	InputVelocity = Input.X * GetActorForwardVector() +
+					Input.Y * GetActorUpVector();
 }
 
 void AShipPlayer::HandleInputRotationalThrust(const FInputActionValue& Value) {
