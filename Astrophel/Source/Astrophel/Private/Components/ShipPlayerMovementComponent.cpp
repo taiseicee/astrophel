@@ -4,7 +4,7 @@
 #include "Components/ShipPlayerMovementComponent.h"
 
 UShipPlayerMovementComponent::UShipPlayerMovementComponent() {
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 
 }
 
@@ -13,8 +13,7 @@ void UShipPlayerMovementComponent::BeginPlay() {
 	
 }
 
-void UShipPlayerMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
+FVector UShipPlayerMovementComponent::GetVelocityGlobal(const float& DeltaTime, const FVector& InputVelocityGlobal) {
+	UE_LOG(LogTemp, Warning, TEXT("Translational Velocity: %s"), *InputVelocityGlobal.ToString());
+	return InputVelocityGlobal;
 }
-

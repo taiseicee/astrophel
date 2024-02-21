@@ -34,7 +34,7 @@ public:
 
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta=(AllowPrivateAccess="true"))
-	UCapsuleComponent* CapsuleCollider;
+	UCapsuleComponent* ColliderCapsule;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components|Visual", meta=(AllowPrivateAccess="true"))
 	UPaperFlipbookComponent* Flipbook;
@@ -45,7 +45,7 @@ private:
 	UCameraComponent* Camera;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components|Combat", meta=(AllowPrivateAccess="true"))
-	USceneComponent* ProjectileSpawnPoint;
+	USceneComponent* SpawnPointProjectile;
 
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Movement", meta=(AllowPrivateAccess="true"))
@@ -60,5 +60,7 @@ private:
 
 	void HandleInputThrust(const FInputActionValue& Value);
 	void HandleInputRotationalThrust(const FInputActionValue& Value);
+
+	FVector InputVelocity = FVector::ZeroVector;
 
 };

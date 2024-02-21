@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "ShipPlayerMovementComponent.generated.h"
 
+class UPrimitiveComponent;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ASTROPHEL_API UShipPlayerMovementComponent : public UActorComponent {
@@ -13,11 +14,13 @@ class ASTROPHEL_API UShipPlayerMovementComponent : public UActorComponent {
 
 public:
 	UShipPlayerMovementComponent();
+	UPrimitiveComponent* UpdatedComponent;
+	FVector GetVelocityGlobal(const float& DeltaTime, const FVector& InputVelocityGlobal);
 
 protected:
 	virtual void BeginPlay() override;
 
-public:
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+private:
+	FVector VelocityGlobal = FVector::ZeroVector;
 
 };

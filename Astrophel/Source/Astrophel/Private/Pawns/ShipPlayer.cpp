@@ -14,19 +14,22 @@
 AShipPlayer::AShipPlayer() {
 	PrimaryActorTick.bCanEverTick = true;
 
-	CapsuleCollider = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule Collider"));
+	ColliderCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule Collider"));
 	Flipbook = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Sprite"));
 	SpringArmCamera = CreateDefaultSubobject<USpringArmComponent>(TEXT("Camera Spring Arm"));
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
-	ProjectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile Spawn Point"));
+	SpawnPointProjectile = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile Spawn Point"));
 	
-	RootComponent = CapsuleCollider;
+	RootComponent = ColliderCapsule;
 	Flipbook->SetupAttachment(RootComponent);
 	SpringArmCamera->SetupAttachment(RootComponent);
 	Camera->SetupAttachment(SpringArmCamera);
-	ProjectileSpawnPoint->SetupAttachment(Flipbook);
+	SpawnPointProjectile->SetupAttachment(Flipbook);
 
 	MovementComponent = CreateDefaultSubobject<UShipPlayerMovementComponent>(TEXT("Movement Component"));
+	if (MovementComponent) {
+		MovementComponent->UpdatedComponent = ColliderCapsule;
+	}
 }
 
 void AShipPlayer::BeginPlay() {
@@ -41,7 +44,7 @@ void AShipPlayer::BeginPlay() {
 
 void AShipPlayer::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
-
+	MovementComponent->GetVelocityGlobal(DeltaTime, InputVelocity);
 }
 
 void AShipPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) {
@@ -55,8 +58,7 @@ void AShipPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 void AShipPlayer::HandleInputThrust(const FInputActionValue& Value) {
 	const FVector2D Input = Value.Get<FVector2D>();
-
-	UE_LOG(LogTemp, Warning, TEXT("Translational Thrust: %s"), *Input.ToString());
+	InputVelocity = FVector(Input.X, 0.f, Input.Y);
 }
 
 void AShipPlayer::HandleInputRotationalThrust(const FInputActionValue& Value) {
