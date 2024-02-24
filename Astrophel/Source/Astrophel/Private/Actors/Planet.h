@@ -8,6 +8,7 @@
 
 class USphereComponent;
 class UPaperFlipbookComponent;
+class AShipPlayer;
 
 UCLASS()
 class APlanet : public AActor {
@@ -35,4 +36,8 @@ private:
 	UFUNCTION()
 	void UpdatePlayerContext(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
+	UFUNCTION()
+	void HandlePlayerContext();
+
+	AShipPlayer* ShipPlayer;
 };

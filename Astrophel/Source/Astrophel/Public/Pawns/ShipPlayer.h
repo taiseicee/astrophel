@@ -17,6 +17,8 @@ class UShipPlayerMovementComponent;
 class UInputMappingContext;
 class UInputAction;
 
+DECLARE_DYNAMIC_DELEGATE(FOnInteractSignature);
+
 UCLASS()
 class AShipPlayer : public APawn {
 	GENERATED_BODY()
@@ -68,6 +70,6 @@ private:
 	FRotator InputRotationalVelocity = FRotator::ZeroRotator;
 
 public:
-	void (*InteractFunction)() = nullptr;
+	FOnInteractSignature OnInteractDelegate;
 
 };

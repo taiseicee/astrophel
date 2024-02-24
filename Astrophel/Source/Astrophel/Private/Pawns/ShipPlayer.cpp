@@ -81,8 +81,5 @@ void AShipPlayer::HandleInputRotationalThrust(const FInputActionValue& Value) {
 
 void AShipPlayer::HandleInteract(const FInputActionValue& Value) {
 	const bool Input = Value.Get<bool>();
-	if (InteractFunction == nullptr) return;
-	void (*CurrentInteractFunction)() = InteractFunction;
-	InteractFunction = nullptr;
-	CurrentInteractFunction();
+	if (OnInteractDelegate.IsBound()) OnInteractDelegate.Execute();
 }
