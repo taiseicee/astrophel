@@ -32,6 +32,8 @@ private:
 	float RotationalMaxSpeed = 70.f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess="true"))
 	float RotationalAcceleration = 15.f;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess="true"))
+	float ReflectionMultiplier = 1.5f;
 
 	FVector ThustVelocity = FVector::ZeroVector;
 	FRotator RotationalVelocity = FRotator::ZeroRotator;
