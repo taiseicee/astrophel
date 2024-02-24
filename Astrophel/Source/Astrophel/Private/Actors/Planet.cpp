@@ -3,6 +3,7 @@
 
 #include "Planet.h"
 #include "Components/SphereComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "PaperFlipbookComponent.h"
 #include "Pawns/ShipPlayer.h"
 
@@ -42,4 +43,6 @@ void APlanet::HandlePlayerContext() {
 	if (!ShipPlayer) return;
 	ShipPlayer->OnInteractDelegate.Clear();
 	UE_LOG(LogTemp, Warning, TEXT("Context Switched Successfully!"));
+	if (!PlanetMap) return;
+	UGameplayStatics::OpenLevelBySoftObjectPtr(this, PlanetMap);
 }

@@ -9,6 +9,7 @@
 class USphereComponent;
 class UPaperFlipbookComponent;
 class AShipPlayer;
+class UWorld;
 
 UCLASS()
 class APlanet : public AActor {
@@ -32,6 +33,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta=(AllowPrivateAccess="true"))
 	USphereComponent* TriggerPlanetEntrance;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess="true"))
+	UWorld* PlanetMap;
 
 	UFUNCTION()
 	void UpdatePlayerContext(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
