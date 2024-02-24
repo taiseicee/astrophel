@@ -49,15 +49,15 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components|Combat", meta=(AllowPrivateAccess="true"))
 	USceneComponent* SpawnPointProjectile;
 
-private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Movement", meta=(AllowPrivateAccess="true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components|Movement", meta=(AllowPrivateAccess="true"))
 	UShipPlayerMovementComponent* MovementComponent;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Movement|Input", meta=(AllowPrivateAccess="true"))
+private:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Input|Movement", meta=(AllowPrivateAccess="true"))
 	UInputMappingContext* MappingContextPlayer;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Movement|Input", meta=(AllowPrivateAccess="true"))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Input|Movement", meta=(AllowPrivateAccess="true"))
 	UInputAction* ActionThrust;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Movement|Input", meta=(AllowPrivateAccess="true"))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Input|Movement", meta=(AllowPrivateAccess="true"))
 	UInputAction* ActionRotationalThrust;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Input", meta=(AllowPrivateAccess="true"))
 	UInputAction* ActionInteract;
