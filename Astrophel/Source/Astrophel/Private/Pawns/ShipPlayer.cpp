@@ -54,7 +54,8 @@ void AShipPlayer::Tick(float DeltaTime) {
 	FHitResult* OutRotationalHitResult = new FHitResult();
 	AddActorLocalRotation(Rotation, true, OutRotationalHitResult, ETeleportType::ResetPhysics);
 
-	// if (OutSweepHitResult->bBlockingHit) Velocity = FVector::ZeroVector;
+	MovementComponent->HandleDisplacementCollision(OutTranslationalHitResult);
+	MovementComponent->HandleRotationCollision(OutRotationalHitResult);
 }
 
 void AShipPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) {

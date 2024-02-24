@@ -17,6 +17,8 @@ public:
 	UPrimitiveComponent* UpdatedComponent;
 	FVector GetDisplacementGlobal(const float& DeltaTime, const FVector& InputVelocity);
 	FRotator GetRotation(const float& DeltaTime, const FRotator& InputRotationalVelocity);
+	void HandleDisplacementCollision(const FHitResult* HitResult);
+	void HandleRotationCollision(const FHitResult* HitResult);
 
 protected:
 	virtual void BeginPlay() override;
