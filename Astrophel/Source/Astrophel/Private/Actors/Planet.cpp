@@ -4,6 +4,11 @@
 #include "Planet.h"
 #include "Components/SphereComponent.h"
 #include "PaperFlipbookComponent.h"
+#include "Pawns/ShipPlayer.h"
+
+void HandlePlayerContext() {
+	UE_LOG(LogTemp, Warning, TEXT("Context Switched Successfully!"));
+}
 
 // Sets default values
 APlanet::APlanet() {
@@ -32,5 +37,8 @@ void APlanet::Tick(float DeltaTime) {
 
 void APlanet::UpdatePlayerContext(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
 	if (!OtherActor || OtherActor == this) return;
-	UE_LOG(LogTemp, Warning, TEXT("Actor Overlapped: %s"), *OtherActor->GetName());
+	AShipPlayer* ShipPlayer = Cast<AShipPlayer>(OtherActor);
+	if (ShipPlayer == nullptr) return;
+	ShipPlayer->InteractFunction = &HandlePlayerContext;
 }
+

@@ -57,11 +57,17 @@ private:
 	UInputAction* ActionThrust;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Movement|Input", meta=(AllowPrivateAccess="true"))
 	UInputAction* ActionRotationalThrust;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Input", meta=(AllowPrivateAccess="true"))
+	UInputAction* ActionInteract;
 
 	void HandleInputThrust(const FInputActionValue& Value);
 	void HandleInputRotationalThrust(const FInputActionValue& Value);
+	void HandleInteract(const FInputActionValue& Value);
 
 	FVector InputVelocity = FVector::ZeroVector;
 	FRotator InputRotationalVelocity = FRotator::ZeroRotator;
+
+public:
+	void (*InteractFunction)() = nullptr;
 
 };

@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "ShipPlayer.h"
+#include "Pawns/ShipPlayer.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
@@ -64,6 +64,7 @@ void AShipPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent)) {
 		EnhancedInputComponent->BindAction(ActionThrust, ETriggerEvent::Triggered, this, &AShipPlayer::HandleInputThrust);
 		EnhancedInputComponent->BindAction(ActionRotationalThrust, ETriggerEvent::Triggered, this, &AShipPlayer::HandleInputRotationalThrust);
+		EnhancedInputComponent->BindAction(ActionInteract, ETriggerEvent::Triggered, this, &AShipPlayer::HandleInteract);
 	}
 }
 
@@ -75,7 +76,13 @@ void AShipPlayer::HandleInputThrust(const FInputActionValue& Value) {
 
 void AShipPlayer::HandleInputRotationalThrust(const FInputActionValue& Value) {
 	const float Input = Value.Get<float>();
-	InputRotationalVelocity.Pitch = Input; 
+	InputRotationalVelocity.Pitch = Input;
+}
 
-	UE_LOG(LogTemp, Warning, TEXT("Rotational Thrust: %f"), Input);
+void AShipPlayer::HandleInteract(const FInputActionValue& Value) {
+	const bool Input = Value.Get<bool>();
+	if (InteractFunction == nullptr) return;
+	void (*CurrentInteractFunction)() = InteractFunction;
+	InteractFunction = nullptr;
+	CurrentInteractFunction();
 }
