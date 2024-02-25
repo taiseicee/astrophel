@@ -5,7 +5,7 @@
 #include "Components/SphereComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "PaperFlipbookComponent.h"
-#include "Pawns/ShipPlayer.h"
+#include "GameFramework/ShipPlayer.h"
 
 // Sets default values
 APlanet::APlanet() {
