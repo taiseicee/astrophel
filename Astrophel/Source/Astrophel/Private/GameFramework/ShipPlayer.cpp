@@ -10,6 +10,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "PaperFlipbookComponent.h"
+#include "PhysicsEngine/PhysicsHandleComponent.h"
 
 AShipPlayer::AShipPlayer() {
 	PrimaryActorTick.bCanEverTick = true;
@@ -19,6 +20,7 @@ AShipPlayer::AShipPlayer() {
 	SpringArmCamera = CreateDefaultSubobject<USpringArmComponent>(TEXT("Camera Spring Arm"));
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	SpawnPointProjectile = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile Spawn Point"));
+	PhysicsHandleAttachment = CreateDefaultSubobject<UPhysicsHandleComponent>(TEXT("Attachment Physics Handle"));
 	
 	RootComponent = ColliderCapsule;
 	Flipbook->SetupAttachment(RootComponent);
@@ -82,4 +84,12 @@ void AShipPlayer::HandleInputRotationalThrust(const FInputActionValue& Value) {
 void AShipPlayer::HandleInteract(const FInputActionValue& Value) {
 	const bool Input = Value.Get<bool>();
 	if (OnInteractDelegate.IsBound()) OnInteractDelegate.Execute();
+}
+
+void AShipPlayer::AttachItemToShip(const UPrimitiveComponent* Item) {
+	UE_LOG(LogTemp, Warning, TEXT("Attaching to Ship"));
+}
+
+void AShipPlayer::DetachItemToShip(const UPrimitiveComponent* Item) {
+	UE_LOG(LogTemp, Warning, TEXT("Detaching to Ship"));
 }

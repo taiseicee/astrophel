@@ -8,6 +8,7 @@
 
 class UPaperFlipbookComponent;
 class USphereComponent;
+class AShipPlayer;
 
 UCLASS()
 class ASTROPHEL_API ASolarPod : public AActor {
@@ -32,9 +33,17 @@ private:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta=(AllowPrivateAccess="true"))
 	USphereComponent* ReachArea;
 
+	AShipPlayer* Player;
+	bool IsAttached = false;
+
 	UFUNCTION()
     void HandleWithinReach(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
     UFUNCTION()
     void HandleExitReach(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+	UFUNCTION()
+	void AttachToShipPlayer();
+	UFUNCTION()
+	void DetachFromShipPlayer();
 
 };

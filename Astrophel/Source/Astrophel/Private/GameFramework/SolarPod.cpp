@@ -4,6 +4,7 @@
 #include "GameFramework/SolarPod.h"
 #include "Components/SphereComponent.h"
 #include "PaperFlipbookComponent.h"
+#include "GameFramework/ShipPlayer.h"
 
 ASolarPod::ASolarPod() {
 	PrimaryActorTick.bCanEverTick = true;
@@ -26,15 +27,37 @@ void ASolarPod::BeginPlay() {
 
 void ASolarPod::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
-
 }
 
 void ASolarPod::HandleWithinReach(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
 	if (!OtherActor || OtherActor == this) return;
-    UE_LOG(LogTemp, Warning, TEXT("Handle Within Reach"));
+
+	Player = Cast<AShipPlayer>(OtherActor);
+	if (!Player) return;
+
+	UE_LOG(LogTemp, Warning, TEXT("Within Attach Reach"));
+	Player->OnInteractDelegate.BindDynamic(this, &ASolarPod::AttachToShipPlayer);
 }
 
 void ASolarPod::HandleExitReach(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) {
 	if (!OtherActor || OtherActor == this) return;
-    UE_LOG(LogTemp, Warning, TEXT("Handle Exit Reach"));
+	if (!Player) return;
+	if (IsAttached) return;
+
+	Player->OnInteractDelegate.Unbind();
+    UE_LOG(LogTemp, Warning, TEXT("Exit Attach Reach"));
+}
+
+void ASolarPod::AttachToShipPlayer() {
+	IsAttached = true;
+	Player->AttachItemToShip(Cast<UPrimitiveComponent>(this));
+	Player->OnInteractDelegate.Unbind();
+	Player->OnInteractDelegate.BindDynamic(this, &ASolarPod::DetachFromShipPlayer);
+}
+
+void ASolarPod::DetachFromShipPlayer() {
+	if (!IsAttached) return;
+	Player->DetachItemToShip(Cast<UPrimitiveComponent>(this));
+	Player->OnInteractDelegate.Unbind();
+	IsAttached = false;
 }
