@@ -17,6 +17,8 @@ public:
 	UPrimitiveComponent* UpdatedComponent;
 	FVector GetDisplacementGlobal(const float& DeltaTime, const FVector& InputVelocity);
 	FRotator GetRotation(const float& DeltaTime, const FRotator& InputRotationalVelocity);
+	void HandleDisplacementCollision(const FHitResult* HitResult);
+	void HandleRotationCollision(const FHitResult* HitResult);
 
 protected:
 	virtual void BeginPlay() override;
@@ -30,6 +32,8 @@ private:
 	float RotationalMaxSpeed = 70.f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess="true"))
 	float RotationalAcceleration = 15.f;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess="true"))
+	float ReflectionMultiplier = 1.5f;
 
 	FVector ThustVelocity = FVector::ZeroVector;
 	FRotator RotationalVelocity = FRotator::ZeroRotator;

@@ -37,3 +37,14 @@ FRotator UShipPlayerMovementComponent::GetRotation(const float& DeltaTime, const
 
 	return Rotation;
 }
+
+void UShipPlayerMovementComponent::HandleDisplacementCollision(const FHitResult* HitResult) {
+	if (!HitResult || !HitResult->bBlockingHit) return;
+	FVector ReducedVelocity = -ReflectionMultiplier * ThustVelocity.ProjectOnToNormal(HitResult->ImpactNormal);
+	ThustVelocity = ThustVelocity + ReducedVelocity;
+}
+
+void UShipPlayerMovementComponent::HandleRotationCollision(const FHitResult* HitResult) {
+	if (!HitResult || !HitResult->bBlockingHit) return;
+	RotationalVelocity = FRotator::ZeroRotator;
+}
