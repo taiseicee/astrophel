@@ -19,14 +19,14 @@ AShipPlayer::AShipPlayer() {
 	Flipbook = CreateDefaultSubobject<UPaperFlipbookComponent>(TEXT("Sprite"));
 	SpringArmCamera = CreateDefaultSubobject<USpringArmComponent>(TEXT("Camera Spring Arm"));
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
-	SpawnPointProjectile = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile Spawn Point"));
 	PhysicsHandleAttachment = CreateDefaultSubobject<UPhysicsHandleComponent>(TEXT("Attachment Physics Handle"));
+	PointAttachment = CreateDefaultSubobject<USceneComponent>(TEXT("Attachment Point"));
 	
 	RootComponent = ColliderCapsule;
 	Flipbook->SetupAttachment(RootComponent);
 	SpringArmCamera->SetupAttachment(RootComponent);
 	Camera->SetupAttachment(SpringArmCamera);
-	SpawnPointProjectile->SetupAttachment(Flipbook);
+	PointAttachment->SetupAttachment(RootComponent);
 
 	MovementComponent = CreateDefaultSubobject<UShipPlayerMovementComponent>(TEXT("Movement Component"));
 	if (MovementComponent) {
@@ -58,6 +58,11 @@ void AShipPlayer::Tick(float DeltaTime) {
 
 	MovementComponent->HandleDisplacementCollision(OutTranslationalHitResult);
 	MovementComponent->HandleRotationCollision(OutRotationalHitResult);
+
+	PhysicsHandleAttachment->SetTargetLocationAndRotation(
+		PointAttachment->GetComponentLocation(),
+		PointAttachment->GetComponentRotation()
+	);
 }
 
 void AShipPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) {
@@ -86,10 +91,17 @@ void AShipPlayer::HandleInteract(const FInputActionValue& Value) {
 	if (OnInteractDelegate.IsBound()) OnInteractDelegate.Execute();
 }
 
-void AShipPlayer::AttachItemToShip(const UPrimitiveComponent* Item) {
+void AShipPlayer::AttachItemToShip(UPrimitiveComponent* Item) {
+	PhysicsHandleAttachment->GrabComponentAtLocationWithRotation(
+		Item,
+		NAME_None,
+		Item->GetComponentLocation(),
+		PointAttachment->GetComponentRotation()
+	);
 	UE_LOG(LogTemp, Warning, TEXT("Attaching to Ship"));
 }
 
-void AShipPlayer::DetachItemToShip(const UPrimitiveComponent* Item) {
+void AShipPlayer::DetachItemToShip(UPrimitiveComponent* Item) {
+	PhysicsHandleAttachment->ReleaseComponent();
 	UE_LOG(LogTemp, Warning, TEXT("Detaching to Ship"));
 }

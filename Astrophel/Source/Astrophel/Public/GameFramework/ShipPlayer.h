@@ -18,6 +18,7 @@ class UInputMappingContext;
 class UInputAction;
 class USpringArmComponent;
 class UPhysicsHandleComponent;
+class USceneComponent;
 
 DECLARE_DYNAMIC_DELEGATE(FOnInteractSignature);
 
@@ -48,14 +49,13 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components|Camera", meta=(AllowPrivateAccess="true"))
 	UCameraComponent* Camera;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components|Combat", meta=(AllowPrivateAccess="true"))
-	USceneComponent* SpawnPointProjectile;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components|Movement", meta=(AllowPrivateAccess="true"))
 	UShipPlayerMovementComponent* MovementComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components|Interact", meta=(AllowPrivateAccess="true"))
 	UPhysicsHandleComponent* PhysicsHandleAttachment;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components|Interact", meta=(AllowPrivateAccess="true"))
+	USceneComponent* PointAttachment;
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Input|Movement", meta=(AllowPrivateAccess="true"))
@@ -77,7 +77,7 @@ private:
 public:
 	FOnInteractSignature OnInteractDelegate;
 
-	void AttachItemToShip(const UPrimitiveComponent* Item);
-	void DetachItemToShip(const UPrimitiveComponent* Item);
+	void AttachItemToShip(UPrimitiveComponent* Item);
+	void DetachItemToShip(UPrimitiveComponent* Item);
 
 };

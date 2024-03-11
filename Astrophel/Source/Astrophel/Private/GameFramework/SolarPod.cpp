@@ -50,14 +50,14 @@ void ASolarPod::HandleExitReach(UPrimitiveComponent* OverlappedComponent, AActor
 
 void ASolarPod::AttachToShipPlayer() {
 	IsAttached = true;
-	Player->AttachItemToShip(Cast<UPrimitiveComponent>(this));
+	Player->AttachItemToShip(Cast<UPrimitiveComponent>(RootComponent));
 	Player->OnInteractDelegate.Unbind();
 	Player->OnInteractDelegate.BindDynamic(this, &ASolarPod::DetachFromShipPlayer);
 }
 
 void ASolarPod::DetachFromShipPlayer() {
 	if (!IsAttached) return;
-	Player->DetachItemToShip(Cast<UPrimitiveComponent>(this));
+	Player->DetachItemToShip(Cast<UPrimitiveComponent>(RootComponent));
 	Player->OnInteractDelegate.Unbind();
 	IsAttached = false;
 }
